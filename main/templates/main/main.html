@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fitness Chetko</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0000ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #f3f3f3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 40px;
+      box-sizing: border-box;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .logo h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    .logo p {
+      margin: 0;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: black;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: #3b48ff;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .start-btn {
+      background-color: #3b48ff;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .start-btn:hover {
+      background-color: #2f38d1;
+    }
+
+    /* 👤 Профиль как кнопка */
+    .profile-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      font-size: 22px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    }
+
+    .profile-btn:hover {
+      background-color: #e0e0e0;
+      transform: scale(1.05);
+    }
+
+    .profile-btn:active {
+      transform: scale(0.95);
+    }
+
+    main {
+      background-color: #e6e6e6;
+      margin: 80px 40px 40px;
+      padding: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .illustration img {
+      width: 180px;
+      height: auto;
+    }
+
+    .info {
+      max-width: 600px;
+    }
+
+    .info h2 {
+      font-size: 20px;
+    }
+
+    .info ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .info li {
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .info li::before {
+      content: "●";
+      color: #3b48ff;
+      position: absolute;
+      left: 0;
+    }
+
+    .description {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1>FC</h1>
+      <p>FITNESS<br>CHOTKO</p>
+    </div>
+
+    <nav>
+      <a href="/training/equipment/">Тренировки</a>
+      <a href="/program/program/">Программы</a>
+      <a href="{% url 'cities' %}">Поиск напарников</a>
+      <a href="/gto/goal/">ГТО</a>
+    </nav>
+
+    <div class="header-right">
+      <button class="start-btn" onclick="window.location.href='/training/equipment/'">Начать тренироваться</button>
+      <button class="profile-btn" onclick="window.location.href='/login/'">👤</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="info">
+      <h2>О нашем сайте:</h2>
+      <ul>
+        <li>Эффективные тренировки, которые вы подбираете под себя</li>
+        <li>Подготовка к соревнованиям и ГТО</li>
+        <li>Поиск единомышленников, напарников в вашем городе</li>
+        <li>Понравилась тренировка? — сохраните её в “Программы”!</li>
+      </ul>
+      <p class="description">
+        Fitness Chetko – лучший сайт для подготовки к соревнованиям, построения тела мечты и просто разминки!
+        На нашем сайте вы также сможете найти единомышленников, ведь вместе идти к цели веселее!
+      </p>
+    </div>
+
+    <div class="illustration">
+      <img src="https://cdn-icons-png.flaticon.com/512/2964/2964514.png" alt="Arm icon">
+    </div>
+  </main>
+</body>
+</html>
