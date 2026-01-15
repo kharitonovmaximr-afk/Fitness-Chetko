@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тренировка - Упражнения</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0000ff;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .panel {
+      background-color: #f7f7f7;
+      border-radius: 22px;
+      width: 650px;
+      height: 620px;
+      padding: 35px 40px;
+      box-sizing: border-box;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .top {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .logo span {
+      font-size: 26px;
+      display: block;
+    }
+
+    .profile-btn {
+      background-color: white;
+      border: 2px solid #ccc;
+      border-radius: 50%;
+      font-size: 22px;
+      cursor: pointer;
+      padding: 8px 10px;
+      transition: all 0.25s;
+    }
+
+    .profile-btn:hover {
+      border-color: #3b48ff;
+      color: #3b48ff;
+      transform: scale(1.1);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 10px 0 15px;
+    }
+
+    .categories {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .step-number {
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .step-number.green {
+      background-color: #4ec64e;
+      color: white;
+    }
+
+    .step-number.blue {
+      background-color: #3b48ff;
+      color: white;
+    }
+
+    .step-subtitle {
+      font-weight: normal;
+      font-size: 12px;
+      color: #666;
+      margin-top: 3px;
+    }
+
+    .exercise-list {
+      background-color: white;
+      border: 2px solid #3b48ff;
+      border-radius: 10px;
+      padding: 12px;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: left;
+      flex-grow: 1;
+      overflow-y: auto;
+      max-height: 320px;
+      margin: 10px 0;
+    }
+
+    .exercise-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      margin-bottom: 10px;
+      background-color: #f9f9f9;
+      border-radius: 6px;
+      transition: background 0.25s;
+    }
+
+    .exercise-item:hover {
+      background-color: #ececec;
+    }
+
+    .exercise-name {
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .exercise-buttons {
+      display: flex;
+      gap: 6px;
+    }
+
+    .move-btn, .technique-btn {
+      background-color: #3b48ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 13px;
+    }
+
+    .move-btn:hover, .technique-btn:hover {
+      background-color: #2f38d1;
+    }
+
+    .delete-btn {
+      background-color: transparent;
+      border: none;
+      color: red;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .delete-btn:hover {
+      transform: scale(1.15);
+    }
+
+    .add-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #3b48ff;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+
+    .add-btn:hover {
+      text-decoration: underline;
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    .btn-nav {
+      border: none;
+      border-radius: 25px;
+      padding: 10px 30px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-nav.back {
+      background-color: #d3d3d3;
+      color: #333;
+    }
+
+    .btn-nav.next {
+      background-color: #3b48ff;
+      color: white;
+    }
+
+    .btn-nav.back:hover {
+      background-color: #bfbfbf;
+    }
+
+    .btn-nav.next:hover {
+      background-color: #2f38d1;
+    }
+
+    /* Нижняя навигация */
+.bottom-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 12px 0;
+    margin-top: 20px; /* отступ сверху */
+}
+
+
+/* Элементы навигации */
+.nav-item {
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  transition: transform 0.2s ease;
+  width: 25%;
+}
+
+.nav-item:hover {
+  transform: scale(1.1);
+}
+
+.nav-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 0 auto 3px;
+}
+
+.nav-circle-active {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #0000ff;
+  margin: 0 auto 3px;
+}
+
+.nav-text {
+  font-size: 12px;
+}
+
+    /* Модальное окно */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      width: 400px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .close-modal {
+      background-color: #3b48ff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 16px;
+      cursor: pointer;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .close-modal:hover {
+      background-color: #2f38d1;
+    }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <div class="top">
+      <div class="logo">
+        <span>FC</span>
+        FITNESS<br>CHOTKO
+      </div>
+      <button class="profile-btn" title="Профиль" onclick="alert('Переход в профиль пользователя')">👤</button>
+    </div>
+
+    <h1>Тренировка</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="categories">
+      <div class="step">
+        <div class="step-number green">✔</div>
+        <div>Оборудование</div>
+      </div>
+      <div class="step">
+        <div class="step-number green">✔</div>
+        <div>Мышцы</div>
+      </div>
+      <div class="step">
+        <div class="step-number blue">3</div>
+        <div>Упражнения</div>
+        <div class="step-subtitle">Готово! Список упражнений</div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   <div class="exercise-list" id="exerciseList">
+      {% if exercise %}
+          {% for exercise_item in exercise %}
+          <div class="exercise-item" data-technique="{{ exercise_item.description|escapejs }}">
+    <div class="exercise-name">{{ exercise_item.title }}</div>
+    <div class="exercise-buttons">
+        <button class="technique-btn">Техника</button>
+        <button class="move-btn">Переместить</button>
+        <button class="delete-btn">🗑</button>
+    </div>
+</div>
+
+          {% endfor %}
+      {% else %}
+          <div style="text-align: center; color: #666; padding: 20px;">
+              {% if selected_equipment or selected_muscles %}
+                  <p>Упражнения не найдены для выбранных критериев:</p>
+                  {% if selected_equipment %}
+                      <p><strong>Оборудование:</strong> {{ selected_equipment }}</p>
+                  {% endif %}
+                  {% if selected_muscles %}
+                      <p><strong>Мышцы:</strong> {{ selected_muscles }}</p>
+                  {% endif %}
+              {% else %}
+                  <p>Выберите оборудование и мышцы для отображения упражнений</p>
+              {% endif %}
+          </div>
+      {% endif %}
+
+      <div class="add-btn" id="addExercise">➕ Добавить</div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Обновите навигационные кнопки -->
+<div class="nav-buttons">
+    <button class="btn-nav back" onclick="goBack()">Назад</button>
+    <button class="btn-nav next" id="nextButton">Далее</button>
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const equipment = urlParams.get('equipment') || '';
+const muscles = urlParams.get('muscles') || '';
+document.getElementById('nextButton').onclick = () => {
+    window.location.href = `/training/saving/?equipment=${encodeURIComponent(equipment)}&muscles=${encodeURIComponent(muscles)}`;
+};
+</script>
+
+</div>
+
+
+
+    <div class="bottom-nav">
+    <a href="{% url 'equipment' %}" class="nav-item">
+      <div class="nav-circle-active"></div><div class="nav-text">Тренировки</div>
+    </a>
+
+    <a href="/program/program/" class="nav-item">
+      <div class="nav-circle"></div><div class="nav-text">Программы</div>
+    </a>
+
+    <a href="{% url 'cities' %}" class="nav-item">
+      <div class="nav-circle"></div><div class="nav-text">Напарники</div>
+    </a>
+
+    <a href="{% url 'goal' %}" class="nav-item">
+      <div class="nav-circle"></div><div class="nav-text">ГТО</div>
+    </a>
+</div>
+  </div>
+
+  <!-- Модальное окно -->
+  <div class="modal" id="techniqueModal">
+    <div class="modal-content">
+      <h3>Техника выполнения</h3>
+      <p id="techniqueText"></p>
+      <button class="close-modal" id="closeModal">Закрыть</button>
+    </div>
+  </div>
+<script>
+    // Функция для возврата с передачей параметров
+    function goBack() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const equipment = urlParams.get('equipment') || '';
+        const muscles = urlParams.get('muscles') || '';
+
+        if (muscles) {
+            window.location.href = `/training/muscles/?equipment=${encodeURIComponent(equipment)}&muscles=${encodeURIComponent(muscles)}`;
+        } else if (equipment) {
+            window.location.href = `/training/equipment/?equipment=${encodeURIComponent(equipment)}`;
+        } else {
+            window.location.href = '/training/muscles/';
+        }
+    }
+
+    // Остальной JavaScript код остается без изменений
+    const modal = document.getElementById('techniqueModal');
+    const techniqueText = document.getElementById('techniqueText');
+    const closeModal = document.getElementById('closeModal');
+
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('delete-btn')) {
+        e.target.closest('.exercise-item').remove();
+      }
+
+      if (e.target.classList.contains('technique-btn')) {
+        const exercise = e.target.closest('.exercise-item');
+        techniqueText.innerHTML = (exercise.dataset.technique || 'Описание отсутствует.').replace(/\n/g, '<br>');
+
+        modal.style.display = 'flex';
+      }
+    });
+
+    closeModal.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    document.getElementById('addExercise').addEventListener('click', () => {
+      const list = document.getElementById('exerciseList');
+      const newItem = document.createElement('div');
+      newItem.classList.add('exercise-item');
+      newItem.dataset.technique = 'Описание техники появится позже.';
+      newItem.innerHTML = `
+        <div class="exercise-name">Новое упражнение</div>
+        <div class="exercise-buttons">
+          <button class="technique-btn">Техника</button>
+          <button class="move-btn">Переместить</button>
+          <button class="delete-btn">🗑</button>
+        </div>
+      `;
+      list.insertBefore(newItem, document.getElementById('addExercise'));
+    });
+</script>
+
+</body>
+</html>

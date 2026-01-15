@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тренировка</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0000ff; /* Синий фон */
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .panel {
+      background-color: #f1f1f1;
+      border-radius: 20px;
+      width: 650px;
+      height: 620px;
+      padding: 35px 40px;
+      box-sizing: border-box;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Верхняя панель */
+    .top {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .logo span {
+      font-size: 26px;
+      display: block;
+    }
+
+    .profile-btn {
+      background-color: white;
+      border: 2px solid #ccc;
+      border-radius: 50%;
+      font-size: 22px;
+      cursor: pointer;
+      padding: 8px 10px;
+      transition: all 0.25s;
+    }
+
+    .profile-btn:hover {
+      border-color: #3b48ff;
+      color: #3b48ff;
+      transform: scale(1.1);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 10px 0 20px;
+    }
+
+    /* Этапы */
+    .categories {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #333;
+      font-size: 14px;
+      position: relative;
+    }
+
+    .step-number {
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .step-number.blue {
+      background-color: #3b48ff;
+      color: white;
+    }
+
+    .step-number.gray {
+      background-color: #ccc;
+      color: white;
+    }
+
+    .step-subtitle {
+      font-weight: normal;
+      font-size: 12px;
+      color: #666;
+      margin-top: 3px;
+    }
+
+    /* Кнопки оборудования */
+    .equipments {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      width: 100%;
+      margin: 25px 0;
+    }
+
+    .btn-equip {
+      background-color: white;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.25s ease;
+      font-size: 14px;
+    }
+
+    .btn-equip:hover {
+      border-color: #3b48ff;
+      transform: translateY(-2px);
+    }
+
+    .btn-equip.active {
+      background-color: #6ee76e;
+      border-color: #4ec64e;
+      box-shadow: 0 0 6px rgba(80, 200, 80, 0.8);
+    }
+
+    /* Кнопки Назад/Далее */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .btn-nav {
+      border: none;
+      border-radius: 25px;
+      padding: 10px 30px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-nav.next {
+      background-color: #3b48ff;
+      color: white;
+    }
+
+    .btn-nav.next:hover {
+      background-color: #2f38d1;
+    }
+
+    .btn-nav.back {
+      background-color: #d1d1d1;
+      color: #555;
+      cursor: not-allowed;
+    }
+
+    /* Нижняя навигация */
+.bottom-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 12px 0;
+    margin-top: 20px; /* отступ сверху */
+}
+
+
+/* Элементы навигации */
+.nav-item {
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  transition: transform 0.2s ease;
+  width: 25%;
+}
+
+.nav-item:hover {
+  transform: scale(1.1);
+}
+
+.nav-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 0 auto 3px;
+}
+
+.nav-circle-active {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #0000ff;
+  margin: 0 auto 3px;
+}
+
+.nav-text {
+  font-size: 12px;
+}
+
+
+  </style>
+</head>
+<body>
+
+  <div class="panel">
+    <!-- Верхняя часть -->
+    <div class="top">
+      <div class="logo">
+        <span>FC</span>
+        FITNESS<br>CHOTKO
+      </div>
+      <button class="profile-btn" title="Профиль" id="profileBtn">👤</button>
+    </div>
+
+    <h1>Тренировка</h1>
+
+    <!-- Этапы -->
+    <div class="categories">
+      <div class="step">
+        <div class="step-number blue">1</div>
+        <div>Оборудование</div>
+        <div class="step-subtitle">Выберите подходящее оборудование</div>
+      </div>
+      <div class="step">
+        <div class="step-number gray">2</div>
+        <div>Мышцы</div>
+      </div>
+      <div class="step">
+        <div class="step-number gray">3</div>
+        <div>Упражнения</div>
+      </div>
+    </div>
+
+    <!-- Кнопки оборудования -->
+    <div class="equipments">
+      <div class="btn-equip">💪 Собственный вес</div>
+      <div class="btn-equip">🏋️‍♂️ Гантели</div>
+      <div class="btn-equip">🏋️ Штанга</div>
+      <div class="btn-equip">🧲 Гиря</div>
+      <div class="btn-equip">🧘 Резинка</div>
+      <div class="btn-equip">💿 Диски</div>
+      <div class="btn-equip">🏗️ Турник</div>
+      <div class="btn-equip">🪑 Скамья</div>
+    </div>
+
+  <!-- Навигационные кнопки -->
+<div class="nav-buttons">
+    <button class="btn-nav back" disabled>Назад</button>
+    <button class="btn-nav next" onclick="window.location.href='/training/muscles/'">Далее</button>
+</div>
+
+    <!-- Нижняя панель -->
+    <div class="bottom-nav">
+    <a href="{% url 'equipment' %}" class="nav-item">
+      <div class="nav-circle-active"></div><div class="nav-text">Тренировки</div>
+    </a>
+
+    <a href="/program/program/" class="nav-item">
+      <div class="nav-circle"></div><div class="nav-text">Программы</div>
+    </a>
+
+    <a href="{% url 'cities' %}" class="nav-item">
+      <div class="nav-circle"></div><div class="nav-text">Напарники</div>
+    </a>
+
+    <a href="{% url 'goal' %}" class="nav-item">
+      <div class="nav-circle"></div><div class="nav-text">ГТО</div>
+    </a>
+</div>
+  </div>
+
+<script>
+    // Зелёное выделение кнопок оборудования
+    document.querySelectorAll('.btn-equip').forEach(btn => {
+        btn.addEventListener('click', () => {
+            btn.classList.toggle('active');
+            updateNextButton();
+        });
+    });
+
+    // Профиль — предупреждение
+    document.getElementById('profileBtn').addEventListener('click', () => {
+        alert('Переход в профиль пользователя');
+    });
+
+    // Функция для очистки текста от эмодзи
+    function cleanEquipmentText(text) {
+        return text.replace(/[^\w\sа-яА-Я]/g, '').trim();
+    }
+
+    // Функция для обновления кнопки "Далее"
+    function updateNextButton() {
+        const selectedEquipment = Array.from(document.querySelectorAll('.btn-equip.active'))
+            .map(btn => {
+                // Очищаем текст от эмодзи
+                return cleanEquipmentText(btn.textContent);
+            })
+            .filter(text => text.length > 0)
+            .join(',');
+
+        console.log("Selected equipment (cleaned):", selectedEquipment);
+
+        const nextButton = document.querySelector('.btn-nav.next');
+        if (selectedEquipment) {
+            nextButton.onclick = () => {
+                window.location.href = `/training/muscles/?equipment=${encodeURIComponent(selectedEquipment)}`;
+            };
+            nextButton.disabled = false;
+            nextButton.style.backgroundColor = '#3b48ff';
+            nextButton.style.cursor = 'pointer';
+        } else {
+            nextButton.onclick = null;
+            nextButton.disabled = true;
+            nextButton.style.backgroundColor = '#ccc';
+            nextButton.style.cursor = 'not-allowed';
+        }
+    }
+
+    // Восстанавливаем выбранное оборудование при возврате
+    function restoreSelectedEquipment() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const equipment = urlParams.get('equipment');
+
+        if (equipment) {
+            const equipmentList = equipment.split(',');
+            document.querySelectorAll('.btn-equip').forEach(btn => {
+                const btnCleanText = cleanEquipmentText(btn.textContent);
+                if (equipmentList.includes(btnCleanText)) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+    }
+
+    // Инициализация
+    updateNextButton();
+    restoreSelectedEquipment();
+</script>
+</body>
+</html>
