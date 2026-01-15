@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Программа тренировки</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0000ff;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .panel {
+      background-color: #f5f5f5;
+      border-radius: 20px;
+      width: 640px;
+      height: 520px;
+      padding: 40px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 1.1;
+    }
+
+    .logo span {
+      font-size: 26px;
+      display: block;
+    }
+
+    .profile-icon {
+      background: none;
+      border: none;
+      color: black;
+      font-size: 28px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .profile-icon:hover {
+      transform: scale(1.1);
+    }
+
+    h1 {
+      font-size: 22px;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .exercise-list {
+      flex-grow: 1;
+      overflow-y: auto;
+      margin: 20px 0;
+      padding-right: 10px;
+    }
+
+    .exercise {
+      background: white;
+      border: 1.5px solid #ccc;
+      border-radius: 10px;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .exercise span {
+      font-size: 15px;
+      flex-grow: 1;
+      text-align: left;
+    }
+
+    .technique-btn {
+      background: #3b48ff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: background 0.2s;
+    }
+
+    .technique-btn:hover {
+      background: #2d38c9;
+    }
+
+    .delete-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      color: red;
+    }
+
+    .bottom-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .back-btn, .save-btn {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 25px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .back-btn {
+      background: #e0e0e0;
+    }
+
+    .save-btn {
+      background: #3b48ff;
+      color: white;
+    }
+
+    .save-btn:hover {
+      background: #2d38c9;
+    }
+
+    /* Модальное окно */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 25px 30px;
+      border-radius: 10px;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .modal-content h3 {
+      margin-top: 0;
+      color: #3b48ff;
+    }
+
+    .close-btn {
+      margin-top: 15px;
+      background: #3b48ff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 14px;
+      cursor: pointer;
+    }
+
+    /* Нижнее меню */
+    .bottom-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 12px 0;
+    margin-top: 20px; /* отступ сверху */
+}
+
+
+/* Элементы навигации */
+.nav-item {
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  transition: transform 0.2s ease;
+  width: 25%;
+}
+
+.nav-item:hover {
+  transform: scale(1.1);
+}
+
+.nav-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 0 auto 3px;
+}
+
+.nav-circle-active {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #0000ff;
+  margin: 0 auto 3px;
+}
+
+.nav-text {
+  font-size: 12px;
+}
+  </style>
+</head>
+<body>
+
+  <div class="panel">
+    <div class="top">
+      <div class="logo">
+        <span>FC</span>
+        FITNESS<br>CHOTKO
+      </div>
+      <button class="profile-icon" title="Профиль" onclick="location.href='/profile/'">👤</button>
+    </div>
+
+    <h1 id="programTitle">Программа</h1>
+
+    <div class="exercise-list" id="exerciseList">
+      <div class="exercise">
+        <span>Подъемы рук перед собой/в стороны с резинкой</span>
+        <button class="technique-btn" onclick="showTechnique('Подъемы рук перед собой/в стороны с резинкой')">Техника</button>
+        <button class="delete-btn">🗑️</button>
+      </div>
+      <div class="exercise">
+        <span>Отжимания от пола</span>
+        <button class="technique-btn" onclick="showTechnique('Отжимания от пола')">Техника</button>
+        <button class="delete-btn">🗑️</button>
+      </div>
+      <div class="exercise">
+        <span>Подъем гантелей через стороны</span>
+        <button class="technique-btn" onclick="showTechnique('Подъем гантелей через стороны')">Техника</button>
+        <button class="delete-btn">🗑️</button>
+      </div>
+    </div>
+
+    <div class="bottom-buttons">
+      <button class="back-btn" onclick="window.history.back()">Назад</button>
+      <button class="save-btn">Сохранить изменения</button>
+    </div>
+
+    <div class="bottom-nav">
+    <a href="{% url 'equipment' %}" class="nav-item">
+      <div class="nav-circle"></div><div class="nav-text">Тренировки</div>
+    </a>
+
+    <a href="/program/program/" class="nav-item">
+      <div class="nav-circle-active"></div><div class="nav-text">Программы</div>
+    </a>
+
+    <a href="{% url 'cities' %}" class="nav-item">
+      <div class="nav-circle"></div><div class="nav-text">Напарники</div>
+    </a>
+
+    <a href="{% url 'goal' %}" class="nav-item">
+      <div class="nav-circle"></div><div class="nav-text">ГТО</div>
+    </a>
+</div>
+  </div>
+
+  <!-- Модальное окно -->
+  <div class="modal" id="techniqueModal">
+    <div class="modal-content">
+      <h3 id="techniqueTitle">Техника</h3>
+      <p id="techniqueDescription">Описание техники появится здесь.</p>
+      <button class="close-btn" onclick="closeTechnique()">Закрыть</button>
+    </div>
+  </div>
+
+  <script>
+    const descriptions = {
+      "Подъемы рук перед собой/в стороны с резинкой": "Встаньте на резинку, возьмитесь за концы и выполняйте подъемы.",
+      "Отжимания от пола": "Примите упор лежа. Опускайтесь, сгибая локти, которые разведены под углом ~45° от корпуса. Грудь должна почти касаться пола.",
+      "Подъем гантелей через стороны": "Стоя, поднимайте гантели через стороны до уровня плеч. Локти слегка согнуты."
+    };
+
+    function showTechnique(name) {
+      document.getElementById("techniqueTitle").textContent = name;
+      document.getElementById("techniqueDescription").textContent = descriptions[name] || "Описание техники недоступно.";
+      document.getElementById("techniqueModal").style.display = "flex";
+    }
+
+    function closeTechnique() {
+      document.getElementById("techniqueModal").style.display = "none";
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const programName = params.get("program");
+    if (programName) {
+      document.getElementById("programTitle").textContent = programName;
+    }
+
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', () => btn.closest('.exercise').remove());
+    });
+  </script>
+
+</body>
+</html>
