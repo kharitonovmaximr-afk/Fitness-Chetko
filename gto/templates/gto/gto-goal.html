@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ГТО — Цель</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background-color: #0000ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Arial", sans-serif;
+  }
+
+  .container {
+    background-color: #f5f5f5;
+    width: 640px;
+    height: 650px;
+    border-radius: 25px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 35px 40px 75px;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  /* Верхняя панель */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    text-align: left;
+    line-height: 1.1;
+  }
+
+  .logo .fc {
+    font-size: 24px;
+    font-weight: 700;
+    color: #000;
+  }
+
+  .logo .text {
+    font-size: 12px;
+    color: #444;
+  }
+
+  .profile-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    font-size: 22px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  }
+
+  /* Заголовки */
+  h2 {
+    text-align: center;
+    margin: 15px 0 10px;
+    font-size: 22px;
+  }
+
+  /* Блок шага */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+
+  .circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #0000ff;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+
+  .step-label {
+    color: #444;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  /* Центральная часть */
+  .content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-top: -20px; /* немного подняли вверх */
+  }
+
+  /* Пол */
+  .gender-block {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .gender-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .gender {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+  }
+
+  .gender label {
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  input[type="radio"] {
+    accent-color: #0000ff;
+    transform: scale(1.3);
+    margin-right: 8px;
+  }
+
+  /* Медали */
+  .medals {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .medal-options {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .medal {
+    background-color: #e6e6e6;
+    border-radius: 15px;
+    padding: 14px 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+  }
+
+  .medal.active {
+    border-color: #0000ff;
+    background-color: #fff;
+  }
+
+  /* Кнопки */
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    width: 100%;
+  }
+
+  .btn {
+    padding: 12px 35px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    font-size: 15px;
+  }
+
+  .btn-back {
+    background-color: #e6e6e6;
+  }
+
+  .btn-next {
+    background-color: #0000ff;
+    color: white;
+  }
+
+  /* Нижняя навигация */
+  .bottom-nav {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .nav-item {
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    transition: transform 0.2s ease;
+  }
+
+  .nav-item:hover {
+    transform: scale(1.1);
+  }
+
+  .nav-circle {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin: 0 auto;
+    transition: background-color 0.2s ease;
+  }
+
+  .nav-circle.active {
+    background-color: #0000ff;
+  }
+
+  .nav-text {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="logo">
+      <div class="fc">FC</div>
+      <div class="text">Fitness Chotko</div>
+    </div>
+    <button class="profile-btn" onclick="location.href='profile.html'">👤</button>
+  </div>
+
+  <div>
+    <h2>ГТО</h2>
+    <div class="steps">
+      <div class="circle">1</div>
+      <div class="step-label">Цель</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="gender-block">
+      <div class="gender-title">Пол</div>
+      <div class="gender">
+    <label><input type="radio" name="gender" value="male" checked>Мужской</label>
+    <label><input type="radio" name="gender" value="female">Женский</label>
+</div>
+    </div>
+
+    <div>
+      <div class="medals">Желаемая медаль</div>
+      <div class="medal-options">
+        <div class="medal" data-value="bronze">🥉 Бронза</div>
+        <div class="medal" data-value="silver">🥈 Серебро</div>
+        <div class="medal" data-value="gold">🥇 Золото</div>
+      </div>
+    </div>
+
+
+
+      <div class="age-block">
+  <div class="gender-title">Возраст</div>
+  <input type="number" id="ageInput" min="6" max="100" placeholder="Введите возраст" style="padding:10px; border-radius:10px; border:1px solid #ccc; font-size:16px; width:150px; text-align:center;">
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <div class="buttons">
+      <button class="btn btn-back" onclick="window.history.back()">Назад</button>
+      <button class="btn btn-next" onclick="goToNormativy()">Далее</button>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <a href="/training/equipment/" class="nav-item">
+      <div class="nav-circle"></div><div class="nav-text">Тренировки</div>
+    </a>
+    <a href="/program/program/" class="nav-item">
+      <div class="nav-circle"></div><div class="nav-text">Программы</div>
+    </a>
+    <a href="{% url 'cities' %}" class="nav-item">
+      <div class="nav-circle "></div><div class="nav-text">Напарники</div>
+    </a>
+    <a href="/gto/goal/" class="nav-item">
+      <div class="nav-circle active"></div><div class="nav-text">ГТО</div>
+    </a>
+  </div>
+</div>
+
+<script>
+  // Активная медаль
+  const medals = document.querySelectorAll('.medal');
+  let selectedMedal = 'bronze'; // по умолчанию
+
+  medals.forEach(m => {
+    m.addEventListener('click', () => {
+      medals.forEach(el => el.classList.remove('active'));
+      m.classList.add('active');
+      selectedMedal = m.dataset.value;
+    });
+  });
+
+  // Функция перехода к нормативам
+  function goToNormativy() {
+    const gender = document.querySelector('input[name="gender"]:checked').value;
+    const medal = selectedMedal;
+    const age = document.getElementById('ageInput').value;
+
+    if (!age) {
+      alert('Пожалуйста, введите возраст');
+      return;
+    }
+
+    window.location.href = `/gto/normativy/?gender=${gender}&medal=${medal}&age=${age}`;
+}
+
+
+
+  // Инициализация - активируем бронзу по умолчанию
+  document.querySelector('.medal[data-value="bronze"]').classList.add('active');
+</script>
+
+</body>
+</html>
