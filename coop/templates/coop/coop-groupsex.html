@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+{% if group %}
+<title>Группа — {{ group.group_name }}</title>
+{% else %}
+<title>Группа не найдена</title>
+{% endif %}
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: #0000ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+  }
+  .container {
+    background: #f5f5f5;
+    width: 640px;
+    min-height: 650px;
+    border-radius: 25px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.25);
+    padding: 35px 40px 80px;
+    box-sizing: border-box;
+    text-align: center;
+    position: relative;
+  }
+  h2 {
+    margin-bottom: 10px;
+  }
+  p {
+    margin: 6px 0;
+    color: #333;
+  }
+  a.button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 28px;
+    background: #0000ff;
+    color: #fff;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+  }
+  a.button:hover {
+    background: #0000cc;
+  }
+  .buttons {
+    position: absolute;
+    bottom: 25px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .btn-back {
+    background: white;
+    border: 2px solid #0000ff;
+    color: #0000ff;
+    padding: 10px 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .btn-back:hover {
+    background: #0000ff;
+    color: white;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    {% if group %}
+      <h2>{{ group.group_name }}</h2>
+      <p><strong>Город:</strong> {{ group.city }}</p>
+      <p><strong>Род деятельности:</strong> {{ group.activity }}</p>
+      <p><strong>Ссылка:</strong> <a href="{{ group.chat_link }}" target="_blank" rel="noopener noreferrer">{{ group.chat_link }}</a></p>
+      <a class="button" href="{{ group.chat_link }}" target="_blank" rel="noopener noreferrer">Вступить в группу</a>
+    {% else %}
+      <p>Группа не найдена.</p>
+    {% endif %}
+
+    <div class="buttons">
+      <button class="btn-back" onclick="window.location.href='/coop/groups/'">Назад</button>
+    </div>
+  </div>
+</body>
+</html>
+
+
+

@@ -1,0 +1,242 @@
+<<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Поиск напарников</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background-color: #0000ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Arial", sans-serif;
+  }
+
+  .container {
+    background-color: #f5f5f5;
+    width: 640px;
+    height: 650px;
+    border-radius: 25px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px 35px 80px;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo .fc {
+    font-size: 24px;
+    font-weight: 700;
+    color: #000;
+  }
+
+  .logo .text {
+    font-size: 12px;
+    color: #444;
+  }
+
+  .profile-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 22px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  }
+
+  h2 {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 22px;
+  }
+
+  /* шаги */
+  .steps {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  .circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+    margin: 0 auto 5px;
+  }
+
+  .active { background-color: #0048ff; }
+  .inactive { background-color: #bcbcbc; }
+
+  /* выпадающий список */
+  .select-container {
+    margin: 30px auto;
+    text-align: center;
+  }
+
+  select {
+    width: 70%;
+    padding: 10px;
+    border-radius: 12px;
+    border: 2px solid #0048ff;
+    font-size: 16px;
+    outline: none;
+  }
+
+  /* кнопки */
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+  }
+
+  .btn {
+    padding: 10px 30px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+  }
+
+  .btn-back {
+    background-color: #e6e6e6;
+  }
+
+  .btn-next {
+    background-color: #0048ff;
+    color: white;
+  }
+
+  /* нижняя навигация */
+  .bottom-nav {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .nav-item {
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+  }
+
+  .nav-circle {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin: 0 auto;
+  }
+
+  .nav-circle.active {
+    background-color: #0048ff;
+  }
+
+  .nav-text {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div>
+    <div class="header">
+      <div class="logo">
+        <div class="fc">FC</div>
+        <div class="text">Fitness Chotko</div>
+      </div>
+      <button class="profile-btn">👤</button>
+    </div>
+
+    <h2>Поиск напарников</h2>
+
+    <div class="steps">
+      <div>
+        <div class="circle active">1</div>
+        📍<br>Местоположение
+      </div>
+      <div>
+        <div class="circle inactive">2</div>
+        🏋️<br>Род деятельности
+      </div>
+      <div>
+        <div class="circle inactive">3</div>
+        💬<br>Группы
+      </div>
+    </div>
+
+    <form method="get" action="{% url 'sport' %}">
+      <div class="select-container">
+        <label for="city">Выберите город:</label><br>
+        <select id="city" name="city" required>
+          <option value="" disabled selected>Выберите город...</option>
+          {% for city in cities %}
+            <option value="{{ city }}">{{ city }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="buttons">
+        <button type="button" class="btn btn-back" onclick="window.history.back()">Назад</button>
+        <button type="submit" class="btn btn-next">Далее</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="bottom-nav">
+    <a href="/training/equipment/" class="nav-item">
+      <div class="nav-circle"></div>
+      <div class="nav-text">Тренировки</div>
+    </a>
+    <a href="/program/program/" class="nav-item">
+      <div class="nav-circle"></div>
+      <div class="nav-text">Программы</div>
+    </a>
+    <a href="{% url 'cities' %}" class="nav-item">
+      <div class="nav-circle active"></div>
+      <div class="nav-text">Напарники</div>
+    </a>
+    <a href="/gto/goal/" class="nav-item">
+      <div class="nav-circle"></div>
+      <div class="nav-text">ГТО</div>
+    </a>
+  </div>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

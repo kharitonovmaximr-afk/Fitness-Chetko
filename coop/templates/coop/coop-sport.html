@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Поиск напарников — Род деятельности</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background-color: #0000ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Arial", sans-serif;
+  }
+
+  .container {
+    background-color: #ffffff;
+    width: 640px;
+    height: 650px;
+    border-radius: 25px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px 35px 80px;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    text-align: left;
+    line-height: 1.1;
+  }
+
+  .logo .fc {
+    font-size: 24px;
+    font-weight: 700;
+    color: #000;
+  }
+
+  .logo .text {
+    font-size: 12px;
+    color: #444;
+  }
+
+  .profile-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    font-size: 22px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  }
+
+  h2 {
+    text-align: center;
+    margin: 10px 0 0;
+    font-size: 22px;
+  }
+
+  .steps {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 14px;
+    font-size: 13px;
+  }
+
+  .step {
+    text-align: center;
+  }
+
+  .circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 5px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .done { background-color: #00c853; }
+  .active { background-color: #0000ff; }
+  .inactive { background-color: #bcbcbc; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 25px;
+  }
+
+  .option {
+    background-color: #e6e6e6;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    padding: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+  }
+
+  .option:hover { background-color: #f5f5f5; }
+  .option.active { border-color: #0000ff; background-color: #ffffff; }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+  }
+
+  .btn {
+    padding: 10px 30px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .btn-back { background-color: #e6e6e6; }
+  .btn-next { background-color: #0000ff; color: white; }
+
+  .bottom-nav {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .nav-item {
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+  }
+
+  .nav-circle {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin: 0 auto;
+  }
+
+  .nav-circle.active { background-color: #0000ff; }
+  .nav-text { font-size: 12px; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div>
+    <div class="header">
+      <div class="logo">
+        <div class="fc">FC</div>
+        <div class="text">Fitness Chotko</div>
+      </div>
+      <button class="profile-btn">👤</button>
+    </div>
+
+    <h2>Выберите род деятельности в городе {{ city }}</h2>
+
+    <div class="steps">
+      <div class="step"><div class="circle done">✔</div>Местоположение</div>
+      <div class="step"><div class="circle active">2</div>Род деятельности</div>
+      <div class="step"><div class="circle inactive">3</div>Группы</div>
+    </div>
+
+    <form method="get" action="{% url 'groups' %}">
+      <input type="hidden" name="city" value="{{ city }}">
+      <div class="grid">
+        {% for activity in activities %}
+          <div class="option" onclick="selectActivity('{{ activity }}')">{{ activity }}</div>
+        {% endfor %}
+      </div>
+      <input type="hidden" name="activity" id="selected-activity">
+    </form>
+  </div>
+
+  <div class="buttons">
+    <button class="btn btn-back" onclick="window.location.href='{% url 'cities' %}'">Назад</button>
+    <button class="btn btn-next" onclick="submitNext()">Далее</button>
+  </div>
+
+  <div class="bottom-nav">
+    <a href="/training/equipment/" class="nav-item">
+      <div class="nav-circle"></div><div class="nav-text">Тренировки</div>
+    </a>
+    <a href="/program/program/" class="nav-item">
+      <div class="nav-circle"></div><div class="nav-text">Программы</div>
+    </a>
+    <a href="{% url 'cities' %}" class="nav-item">
+      <div class="nav-circle active"></div><div class="nav-text">Напарники</div>
+    </a>
+    <a href="/gto/goal/" class="nav-item">
+      <div class="nav-circle"></div><div class="nav-text">ГТО</div>
+    </a>
+  </div>
+</div>
+
+<script>
+  function selectActivity(activity) {
+    document.getElementById('selected-activity').value = activity;
+    document.forms[0].submit();
+  }
+
+  function submitNext() {
+    const selected = document.getElementById('selected-activity').value;
+    if (!selected) {
+      alert('Выберите род деятельности!');
+    } else {
+      document.forms[0].submit();
+    }
+  }
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

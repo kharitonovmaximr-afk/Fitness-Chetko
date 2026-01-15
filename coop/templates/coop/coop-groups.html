@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Группы по интересам</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background-color: #0000ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Arial", sans-serif;
+  }
+  .container {
+    background-color: #f5f5f5;
+    width: 640px;
+    height: 650px;
+    border-radius: 25px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px 35px 80px;
+    box-sizing: border-box;
+    position: relative;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo .fc { font-size: 24px; font-weight: bold; }
+  .logo .text { font-size: 12px; color: #444; }
+  .profile-btn {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: #fff;
+    cursor: pointer;
+    font-size: 22px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  }
+  .steps {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 14px;
+    font-size: 13px;
+  }
+  .circle {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #fff;
+  }
+  .active { background-color: #0048ff; }
+  .inactive { background-color: #bcbcbc; }
+  h2 { margin-top: 20px; text-align: center; }
+  .group-list {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+  .group-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 15px;
+    transition: 0.2s;
+  }
+  .group-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  }
+  .group-name {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .group-info {
+    font-size: 14px;
+    color: #555;
+    margin-top: 6px;
+  }
+  .join-btn {
+    margin-top: 10px;
+    display: inline-block;
+    background: #0048ff;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.2s;
+  }
+  .join-btn:hover {
+    background: #002fb3;
+  }
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+  }
+  .btn {
+    padding: 10px 30px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+  }
+  .btn-back {
+    background: #e6e6e6;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div>
+    <div class="header">
+      <div class="logo">
+        <div class="fc">FC</div>
+        <div class="text">Fitness Chotko</div>
+      </div>
+      <button class="profile-btn" onclick="location.href='/profile/'">👤</button>
+    </div>
+
+    <h2>Группы для {{ activity }} в городе {{ city }}</h2>
+
+    <div class="steps">
+      <div class="step"><div class="circle active">1</div>📍<br>Местоположение</div>
+      <div class="step"><div class="circle active">2</div>🏋️<br>Род деятельности</div>
+      <div class="step"><div class="circle active">3</div>💬<br>Группы</div>
+    </div>
+
+    <div class="group-list">
+      {% if groups %}
+        {% for group in groups %}
+          <div class="group-card">
+            <div class="group-name">{{ group.name }}</div>
+            <div class="group-info">
+              <strong>Город:</strong> {{ group.city }}<br>
+              <strong>Деятельность:</strong> {{ group.activity }}
+            </div>
+            <a href="{{ group.chat_link }}" target="_blank" class="join-btn">Вступить в группу</a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p style="text-align:center;">Группы пока не найдены 😔</p>
+      {% endif %}
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="btn btn-back" onclick="window.history.back()">Назад</button>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
+
+
+
