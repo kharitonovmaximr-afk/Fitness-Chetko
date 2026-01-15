@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мой профиль</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0000ff;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .panel {
+      background-color: #f7f7f7;
+      border-radius: 22px;
+      width: 650px;
+      height: 620px;
+      padding: 35px 40px;
+      box-sizing: border-box;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .top {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .logo span {
+      font-size: 26px;
+      display: block;
+    }
+
+    .profile-btn {
+      background-color: #3b48ff;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 22px;
+      cursor: pointer;
+      padding: 8px 10px;
+      transition: all 0.25s;
+    }
+
+    .profile-btn:hover {
+      background-color: #2f38d1;
+      transform: scale(1.1);
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .user-info {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .content {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      text-align: left;
+    }
+
+    .block {
+      background-color: white;
+      border-radius: 12px;
+      border: 1.5px solid #ccc;
+      padding: 12px 16px;
+      box-sizing: border-box;
+    }
+
+    .block h3 {
+      margin: 0 0 10px 0;
+      font-size: 15px;
+    }
+
+    .training-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin-bottom: 10px;
+    }
+
+    .training-date {
+      background-color: #6ee76e;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .training-muscle {
+      font-weight: bold;
+      margin-left: 8px;
+    }
+
+    .return-btn {
+      background-color: #3b48ff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 13px;
+    }
+
+    .return-btn:hover {
+      background-color: #2f38d1;
+    }
+
+    .group-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin-bottom: 10px;
+    }
+
+    .group-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .group-name {
+      font-weight: bold;
+    }
+
+    .group-count {
+      font-size: 13px;
+      color: #555;
+    }
+
+    .archive {
+      grid-column: span 2;
+      background-color: white;
+      border-radius: 12px;
+      border: 1.5px solid #ccc;
+      padding: 12px 16px;
+      box-sizing: border-box;
+      text-align: left;
+    }
+
+    .archive h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+
+    .archive small {
+      color: #777;
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .bottom-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      color: #333;
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    .bottom-circle {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: #ccc;
+      margin-bottom: 5px;
+      transition: background 0.3s;
+    }
+
+    .bottom-item.active .bottom-circle {
+      background-color: #3b48ff;
+    }
+
+    .bottom-item.active span {
+      color: #3b48ff;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <!-- Верх -->
+    <div class="top">
+      <div class="logo">
+        <span>FC</span>
+        FITNESS<br>CHOTKO
+      </div>
+      <button class="profile-btn" title="Профиль">👤</button>
+    </div>
+
+    <h1>Мой профиль</h1>
+
+    <div class="user-info">
+      <div>{{ user.username }} {{ user.last_name }}</div>
+      <div>Ударный режим: 0</div>
+    </div>
+
+    <!-- Основная информация -->
+    <div class="content">
+      <div class="block">
+        <h3>📅 История тренировок [2]</h3>
+        <div class="training-card">
+          <div>
+            <div class="training-date">09.10.2025</div>
+            <div class="training-muscle">💪 Пресс</div>
+          </div>
+          <button class="return-btn" onclick="window.location.href='training.html'">↩️ Вернуться</button>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3>👥 Ваши группы</h3>
+        <div class="group-card">
+          <div class="group-info">
+            <span>🏃‍♂️ <b>Бег Оренбург</b></span>
+          </div>
+          <div class="chat">💬</div>
+        </div>
+        <div class="group-count">120 участников</div>
+      </div>
+
+      <div class="archive">
+        <h3>📚 Архив тренировок</h3>
+        <small>(Последние 15 тренировок)</small>
+      </div>
+    </div>
+
+    <!-- Нижняя панель -->
+    <div class="bottom-nav">
+      <a href="{% url 'equipment' %}" class="bottom-item active">
+        <div class="bottom-circle"></div>
+        <span>Тренировки</span>
+      </a>
+      <a href="/program/program/" class="bottom-item">
+        <div class="bottom-circle"></div>
+        <span>Программы</span>
+      </a>
+      <a href="{% url 'cities' %}" class="bottom-item">
+        <div class="bottom-circle"></div>
+        <span>Напарники</span>
+      </a>
+      <a href="{% url 'goal' %}" class="bottom-item">
+        <div class="bottom-circle"></div>
+        <span>ГТО</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Кнопка профиля
+    document.querySelector('.profile-btn').addEventListener('click', () => {
+      alert('Вы уже в профиле пользователя.');
+    });
+
+    // Кнопка чата
+    document.querySelector('.chat').addEventListener('click', () => {
+      alert('Открывается чат группы "Бег Оренбург".');
+    });
+
+    // Навигация снизу
+    document.querySelectorAll('.bottom-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.bottom-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

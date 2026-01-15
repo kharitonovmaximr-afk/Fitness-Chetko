@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0000ff;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .panel {
+      background-color: #f5f5f5;
+      border-radius: 20px;
+      width: 520px;
+      padding: 40px;
+      box-sizing: border-box;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 1.1;
+    }
+
+    .logo span {
+      font-size: 26px;
+      display: block;
+    }
+
+    .profile-icon {
+      background: #3b48ff;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 20px 0 25px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px 20px;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1.5px solid #aaa;
+      outline: none;
+      font-size: 14px;
+      box-sizing: border-box;
+      padding-left: 34px;
+    }
+
+    input:focus {
+      border-color: #3b48ff;
+      box-shadow: 0 0 4px rgba(59,72,255,0.4);
+    }
+
+    .emoji {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    .show-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .btn {
+      grid-column: span 2;
+      margin-top: 10px;
+      background-color: #3b48ff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      width: 100%;
+      padding: 12px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #2d38c9;
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 25px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 13px;
+      color: #555;
+      cursor: pointer;
+    }
+
+    .circle {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: #ccc;
+      margin-bottom: 6px;
+    }
+
+    .nav-item.active .circle {
+      background-color: #3b48ff;
+    }
+
+    .nav-item.active span {
+      color: #3b48ff;
+      font-weight: bold;
+    }
+
+    .errors p {
+      color:red;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="panel">
+    <div class="errors">
+      {% if form.errors %}
+          <h2>Пожалуйста устраните ошибки</h2>
+          {% for field in form %}
+              {% for error in field.errors %}
+                  <p>Ошибка в поле "{{ field.label }}": {{ error }}</p>
+              {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+               <p>Общая ошибка: {{ error }}</p>
+          {% endfor %}
+
+    {% endif %}
+
+      </div>
+    <div class="top">
+      <div class="logo">
+        <span>FC</span>
+        FITNESS<br>CHOTKO
+      </div>
+      <button class="profile-icon">👤</button>
+    </div>
+
+    <h1>Создать аккаунт</h1>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="field">
+        <label>Имя</label>
+        <span class="emoji">👋</span>
+        {{ form.username }}
+      </div>
+
+      <div class="field">
+        <label>Фамилия</label>
+        <span class="emoji">🧍‍♂️</span>
+        {{ form.last_name }}
+      </div>
+
+      <div class="field" style="grid-column: span 2;">
+        <label>Эл. почта</label>
+        <span class="emoji">📧</span>
+        {{ form.email }}
+      </div>
+
+      <div class="field">
+        <label>Пароль</label>
+        <span class="emoji">🔒</span>
+        {{ form.password1 }}
+        <button type="button" class="show-password" data-target="id_password1">👁️</button>
+      </div>
+
+      <div class="field">
+        <label>Повтор пароля</label>
+        <span class="emoji">🔁</span>
+        {{ form.password2 }}
+        <button type="button" class="show-password" data-target="id_password2">👁️</button>
+      </div>
+
+      <div class="field">
+        <label>Возраст</label>
+        <span class="emoji">🎂</span>
+        {{ form.age }}
+      </div>
+
+      <div class="field">
+        <label>Группа здоровья</label>
+        <span class="emoji">💪</span>
+        {{ form.health_group }}
+      </div>
+
+      <button class="btn" type="submit">Зарегистрироваться</button>
+    </form>
+
+    <div class="bottom-nav">
+      <div class="nav-item active">
+        <div class="circle"></div>
+        <span>Тренировки</span>
+      </div>
+      <div class="nav-item">
+        <div class="circle"></div>
+        <span>Программы</span>
+      </div>
+      <div class="nav-item">
+        <div class="circle"></div>
+        <span>Напарники</span>
+      </div>
+      <div class="nav-item">
+        <div class="circle"></div>
+        <span>ГТО</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.show-password').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = document.getElementById(btn.dataset.target);
+        const type = target.type === 'password' ? 'text' : 'password';
+        target.type = type;
+        btn.textContent = type === 'password' ? '👁️' : '🙈';
+      });
+    });
+  </script>
+
+</body>
+</html>
